@@ -38,7 +38,7 @@ public class Root {
     }
 
     public void launchBrowser() {
-
+        
         try {
             loadProperties();
         } catch (IOException e) {
