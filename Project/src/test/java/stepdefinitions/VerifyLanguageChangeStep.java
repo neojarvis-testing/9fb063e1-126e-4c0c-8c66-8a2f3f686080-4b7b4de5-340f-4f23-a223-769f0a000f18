@@ -68,5 +68,3 @@ public void the_user_updates_the_language_selection_and_verifies_the_text_change
   
 }
 }
-
- 

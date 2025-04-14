@@ -19,7 +19,6 @@
   </properties>
 
   <dependencies>
-
 <dependency>
     <groupId>org.projectlombok</groupId>
     <artifactId>lombok</artifactId>
@@ -45,8 +44,6 @@
     <artifactId>commons-email</artifactId>
     <version>1.5</version>
 </dependency>
-
-
     <dependency>
       <groupId>org.apache.poi</groupId>
       <artifactId>poi</artifactId>
@@ -82,8 +79,6 @@
     <version>7.22.0</version>
     <scope>test</scope>
 </dependency>
-
-
 
   </dependencies>
 

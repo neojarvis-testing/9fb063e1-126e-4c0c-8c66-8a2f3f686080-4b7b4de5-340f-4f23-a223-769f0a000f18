@@ -66,3 +66,4 @@ public class HomePageLocators {
         public static By homePageSideBarCategoryLabel=By.xpath("//h3[@class='cate-title medium-size-bold']");
         public static By categoryPageSideBarCategoryLabel=By.xpath("//h1[@class='cate-title']");
 }
+ 

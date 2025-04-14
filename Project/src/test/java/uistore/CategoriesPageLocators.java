@@ -8,3 +8,4 @@ public class CategoriesPageLocators {
     public static By commonLocator = By.xpath("//a[@class='item-anchor']");
     public static By categoriesPageSideBarCategoryNameLabel = By.xpath("//h1[@class='cate-title']");
 }
+ 

@@ -205,9 +205,7 @@ Then user is taken to "Made-in-China.com - Manufacturers, Suppliers & Products i
 
     Then the browser redirects to the correct page for each link
     And the URL contains the expected value
-<<<<<<< HEAD
-    And logs and screenshots are handled for specific actions
-=======
+
     And logs and screenshots are handled for specific actions
 
 
@@ -228,4 +226,3 @@ Then user is taken to "Made-in-China.com - Manufacturers, Suppliers & Products i
 
  
  
->>>>>>> 5441cfb8366253c1018cc496033b25521d1fce05
