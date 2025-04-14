@@ -28,3 +28,4 @@ public class SearchResultPageLocators {
         public static By searchResultPageSiteLogo = By.cssSelector("a[href='//www.made-in-china.com']");
 
 }
+ 

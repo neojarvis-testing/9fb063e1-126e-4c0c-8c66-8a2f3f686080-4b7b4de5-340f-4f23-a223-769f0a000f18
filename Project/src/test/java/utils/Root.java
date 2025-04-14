@@ -1,3 +1,5 @@
+
+
 package utils;
 
 import java.io.FileInputStream;
@@ -36,7 +38,7 @@ public class Root {
     }
 
     public void launchBrowser() {
-
+        
         try {
             loadProperties();
         } catch (IOException e) {
@@ -95,3 +97,4 @@ public class Root {
     }
 
 }
+ 
