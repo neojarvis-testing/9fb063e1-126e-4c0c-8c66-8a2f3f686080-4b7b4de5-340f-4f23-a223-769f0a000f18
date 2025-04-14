@@ -61,3 +61,4 @@ public void user_clicks_on_the_join_free_button() {
     }
 
 }
+ 
