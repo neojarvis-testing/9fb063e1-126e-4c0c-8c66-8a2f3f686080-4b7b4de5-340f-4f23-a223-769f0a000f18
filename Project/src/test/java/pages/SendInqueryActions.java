@@ -50,6 +50,5 @@ public class SendInqueryActions {
     public void homepagelogo() {
         helper.performClick(SendInqueryPageLocators.SendInqueryPagelogo);
     }
-
 }
  
