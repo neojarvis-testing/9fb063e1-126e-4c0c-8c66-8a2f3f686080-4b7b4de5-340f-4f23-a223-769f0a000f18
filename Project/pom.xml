@@ -44,8 +44,6 @@
     <artifactId>commons-email</artifactId>
     <version>1.5</version>
 </dependency>
-
-
     <dependency>
       <groupId>org.apache.poi</groupId>
       <artifactId>poi</artifactId>
@@ -81,7 +79,9 @@
     <version>7.22.0</version>
     <scope>test</scope>
 </dependency>
+
   </dependencies>
+
   <build>
     <pluginManagement>      <!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
