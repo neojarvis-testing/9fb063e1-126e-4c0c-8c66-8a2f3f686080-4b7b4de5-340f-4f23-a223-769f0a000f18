@@ -2,11 +2,9 @@ package utils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Properties;
 import java.util.TimeZone;
- 
-import com.google.common.io.Files;
+
  
  
 import com.aventstack.extentreports.ExtentReports;

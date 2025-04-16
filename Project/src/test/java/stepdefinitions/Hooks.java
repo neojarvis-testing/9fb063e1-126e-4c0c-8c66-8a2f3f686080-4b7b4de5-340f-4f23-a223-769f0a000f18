@@ -45,10 +45,10 @@ public class Hooks extends Root {
     @AfterAll
     public static void deleteReport() {
         extentreports.flush();
-        // String reportPath=Root.prop.getProperty("reportPath");
-        // String receipentEmail=Root.prop.getProperty("receiverEmail1");
-        // EmailUtility.sendEmailWithReport(reportPath, receipentEmail);
-        // LogHelper.info("Email sent successfully !");
+        String reportPath=Root.prop.getProperty("reportPath");
+        String receipentEmail=Root.prop.getProperty("receiverEmail1");
+        EmailUtility.sendEmailWithReport(reportPath, receipentEmail);
+        LogHelper.info("Email sent successfully !");
     }
 
 }
