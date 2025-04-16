@@ -34,15 +34,15 @@ public class SendInqueryActions {
      * Description: clicking on the send inquery
      */
 
-    public void sendInquery() {
-        helper.performClick(SendInqueryPageLocators.SendInqueryPageSend);
-        LogHelper.info("clicked over the button" + helper.retrieveText(SendInqueryPageLocators.SendInqueryPageSend));
-        Hooks.extentTest.log(Status.INFO,
-                "clicked over the button" + helper.retrieveText(SendInqueryPageLocators.SendInqueryPageSend));
-        driver.navigate().refresh();
-        helper.performClick(SendInqueryPageLocators.SendInqueryPagelogo);
+    // public void sendInquery() {
+    //     // helper.performClick(SendInqueryPageLocators.SendInqueryPageSend);
+    //     // LogHelper.info("clicked over the button" + helper.retrieveText(SendInqueryPageLocators.SendInqueryPageSend));
+    //     // Hooks.extentTest.log(Status.INFO,
+    //     //         "clicked over the button" + helper.retrieveText(SendInqueryPageLocators.SendInqueryPageSend));
+    //     // driver.navigate().refresh();
+    //     // helper.performClick(SendInqueryPageLocators.SendInqueryPagelogo);
 
-    }
+    // }
 
     /**
      * Description: navigate back to the homepage

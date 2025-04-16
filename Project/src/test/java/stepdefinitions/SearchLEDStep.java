@@ -1,5 +1,7 @@
 package stepdefinitions;
 
+import org.junit.Assert;
+
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import pages.HomePageActions;
@@ -24,61 +26,32 @@ public class SearchLEDStep {
         productsPageActions.verifyLEDPage(string);
     }
 
-    @When("the user clicks the {string} filter")
-    public void the_user_clicks_the_filter(String string) {
-        productsPageActions.ledstripLight();
-
-    }
-
-    @When("the user clicks the {string} or {string} button")
-    public void the_user_clicks_the_or_button(String string, String string2) {
-
-        productsPageActions.contactnow();
-
-    }
-
-    @When("fills the inquiry form with {string} in Content and {string} in Email Address")
-    public void fills_the_inquiry_form_with_in_content_and_in_email_address(String string, String string2) {
+    @When("the user fills inquiry form with {string} and {string}")
+    public void the_user_fills_inquiry_form_with_and(String string, String string2) {
 
         sendInqueryActions.contentBoxandemail(string, string2);
 
     }
 
-    @When("clicks the {string} button")
-    public void clicks_the_button(String string) {
-
-        sendInqueryActions.sendInquery();
-
+    @Then("the user validate {string} present on {string} page")
+    public void the_user_validate_present_on_page(String string, String string2) {
+        LogHelper.info(string);
     }
 
-    @When("the user navigates back to the homepage using the site logo")
-    public void the_user_navigates_back_to_the_homepage_using_the_site_logo() {
-        sendInqueryActions.homepagelogo();
-    }
-
-    @When("the user hovers over {string} under the Categories section")
-    public void the_user_hovers_over_under_the_categories_section(String string) {
-
-        homePageActions.LightsLighting();
-
-    }
-
-    @When("hovers over {string} under the {string} section")
-    public void hovers_over_under_the_section(String string, String string2) {
-
-        homePageActions.Ledtube();
-
-    }
-
-    @Then("the keyword {string} should be present on the product list page")
-    public void the_keyword_should_be_present_on_the_product_list_page(String string) {
-         LogHelper.info(string);
+    @When("the user navigates back to {string}")
+    public void the_user_navigates_back_to(String string) {
+        Assert.assertEquals(Root.driver.getCurrentUrl(), string);
     }
 
     @When("the user clicks the {string}")
     public void the_user_clicks_the(String string) {
-        productsPageActions.ledlighttubefilter();
+        productsPageActions.clickLEDElement(string);
 
+    }
+
+    @When("the user hovers over {string} under {string} section")
+    public void the_user_hovers_over_under_section(String string, String string2) {
+        productsPageActions.hoverOverSections(string);
     }
 
 }

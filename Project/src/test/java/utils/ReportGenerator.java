@@ -88,39 +88,21 @@ public class ReportGenerator extends Root {
      * @return
      */  
     public static String captureScreenShot(String filename) {
-        String timestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
-        String name = filename + timestamp + ".png";
- 
-        String destPath =  "./"+name;
- 
         ts = (TakesScreenshot) driver;
-        File file = ts.getScreenshotAs(OutputType.FILE);
- 
-       
-        File screenshotsDir = new File(System.getProperty("user.dir") + "/reports");
-       
-        if (!screenshotsDir.exists()) {
-            screenshotsDir.mkdirs();
-        }
- 
-        File target = new File(screenshotsDir, name);
-        try {
-            Files.copy(file, target);
-        } catch (Exception e) {
-            LogHelper.error(e.getMessage());
-        }
-        return destPath;
+        String file = ts.getScreenshotAs(OutputType.BASE64);
+        return file;
     }
  
     /**
      * Description: Attaches the screenshot to report
+     * Author: Radhika
      * @param filename
      * @param test
      * @param description
      */
     public static void addScreenshotToReport(String filename, ExtentTest test, String description) {
         try {
-            test.log(Status.INFO, description, MediaEntityBuilder.createScreenCaptureFromPath(captureScreenShot(filename)).build());
+            test.log(Status.PASS, description, MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenShot(filename)).build());
         } catch (Exception e) {
             LogHelper.error(e.getMessage());
         }

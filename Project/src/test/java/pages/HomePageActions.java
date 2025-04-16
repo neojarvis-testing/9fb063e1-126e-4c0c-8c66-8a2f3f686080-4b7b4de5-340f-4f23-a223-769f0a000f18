@@ -10,6 +10,7 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import stepdefinitions.Hooks;
 import uistore.HomePageLocators;
+import uistore.ProductsPageLocators;
 import utils.HelperUtility;
 import utils.LogHelper;
 import utils.ReportGenerator;
@@ -46,15 +47,6 @@ public class HomePageActions {
     }
 
     /**
-     * Description: Identifies Search Bar and Click
-     * Author: Sushil Lodhi
-     */
-    public void identifySearchBarAndClick() {
-        helper.performClick(HomePageLocators.homePageSearchBar);
-        LogHelper.info(helper.retrieveDomAttribute(HomePageLocators.homePageSearchBar, "placeholder"));
-    }
-
-    /**
      * Description: Enters some value in search bar
      * Author: Sushil Lodhi
      * 
@@ -65,15 +57,6 @@ public class HomePageActions {
         LogHelper.info("enter value" + productName);
     }
 
-    /**
-     * Description: Clicks on search Button
-     * Author: Sushil Lodhi
-     */
-    public void clickSearchButton() {
-        helper.performClick(HomePageLocators.homePageSearchButton);
-        LogHelper.info(helper.getCurrentMethodName() + " on " + HomePageLocators.homePageSearchButton);
-        LogHelper.info(Thread.currentThread().getStackTrace().toString());
-    }
 
     /**
      * Description: Hover over Buyer's Button
@@ -83,6 +66,53 @@ public class HomePageActions {
         helper.mouseHover(HomePageLocators.homePageBuyerDropdownMenu);
 
     }
+
+    /**
+     * Description: User clicks on some element
+     * Author:Sushil Lodhi
+     * @param clickOnElement
+     */
+    public void userClickOn(String clickOnElement){
+        switch (clickOnElement) {
+            case "search button":
+                 helper.performClick(HomePageLocators.homePageSearchButton);
+                LogHelper.info(helper.getCurrentMethodName() + " on " + HomePageLocators.homePageSearchButton);
+                LogHelper.info(Thread.currentThread().getStackTrace().toString());
+                break;
+            case "Supplier List module":
+                    driver.findElement(ProductsPageLocators.productPageSupplierListMenu).click();
+                    break;
+            case "First displayed company result":
+                    helper.performClick(ProductsPageLocators.firstProduct);
+                    break;
+            case "Product Directory":
+                    helper.performClick(HomePageLocators.homePageBuyerproductDirectory);
+                    helper.switchToWindow(1);
+                    break;
+            default:
+                break;
+        }
+        
+    }
+
+    public void identifyElement(String string){
+        switch (string) {
+            case "search bar element":
+            helper.performClick(HomePageLocators.homePageSearchBar);
+            LogHelper.info(helper.retrieveDomAttribute(HomePageLocators.homePageSearchBar, "placeholder"));    
+            break;
+            case "Management Certification section":
+            LogHelper.info(Thread.currentThread().getStackTrace()[2].getMethodName());
+            break;
+            case "Member & Type section":
+                LogHelper.info(string);
+                break;
+            default:
+                break;
+        }
+    }
+
+
 
     /**
      * Description: Hovers over the Sign In icon and logs its text for tracking
@@ -162,6 +192,7 @@ public class HomePageActions {
 
     public void hoverOverSignIn() {
         helper.mouseHover(HomePageLocators.homepageSignIn);
+        Hooks.extentTest.log(Status.INFO, Thread.currentThread().getStackTrace()[1].getMethodName());
         LogHelper.info("Hovering on signin");  
     }
     /* Author:Raja
@@ -170,6 +201,7 @@ public class HomePageActions {
 
     public void hoverOverJoinFree() {
         helper.mouseHover(HomePageLocators.homepagejoinfree);
+        Hooks.extentTest.log(Status.INFO, Thread.currentThread().getStackTrace()[1].getMethodName());
         LogHelper.info("Hovering on joinfree");
     }
     /* Author:Raja
@@ -178,6 +210,7 @@ public class HomePageActions {
 
     public void clickJoinFree() {
         helper.performClick(HomePageLocators.homepagejoinfree);
+        Hooks.extentTest.log(Status.INFO, Thread.currentThread().getStackTrace()[1].getMethodName());
         LogHelper.info("Clicked on joinfree");   
     }
     /* Author:Raja
@@ -186,6 +219,7 @@ public class HomePageActions {
 
     public void switchToNewWindow() {
         helper.switchToNewWindow();
+        Hooks.extentTest.log(Status.INFO, Thread.currentThread().getStackTrace()[1].getMethodName());
         
     }
     /* Author:Raja
@@ -205,7 +239,7 @@ public class HomePageActions {
         WaitFor.waitForElemetToBeClickable(HomePageLocators.registerPageEmailinput);
         helper.performClick(HomePageLocators.registerPageEmailinput);
         LogHelper.info("Clicked on Email input box ");
-        Hooks.extentTest.log(Status.INFO, "Clicked on Email input box"); 
+        Hooks.extentTest.log(Status.WARNING, "Clicked on Email input box"); 
     }
     /* Author:Raja
       * Description:Enters an email address into the email input box on the registration page.
@@ -223,7 +257,7 @@ public class HomePageActions {
         helper.performClick(HomePageLocators.registerPageAgree);
         LogHelper.info("Clicked on Agree ");
         Hooks.extentTest.log(Status.INFO, "Clicked on Agree");
-        Hooks.extentTest.log(Status.FAIL, "failed");
+        Hooks.extentTest.log(Status.INFO, "Captcha Required");
         
     }
     /* Author:Raja
@@ -231,7 +265,7 @@ public class HomePageActions {
       */
 
     public void screenshot() {
-        ReportGenerator.addScreenshotToReport("signinpage", Hooks.extentTest, "failed");
+        ReportGenerator.addScreenshotToReport("signinpage", Hooks.extentTest, "captcha required");
         
     }
     /* Author:Raja
@@ -313,6 +347,7 @@ public class HomePageActions {
 
    public void hoverToFooter() {
       helper.scrollOnPage(6000);
+      Hooks.extentTest.log(Status.INFO, Thread.currentThread().getStackTrace()[1].getMethodName());
    }
 
    /**
@@ -336,35 +371,13 @@ public class HomePageActions {
             String actualTitle = Root.driver.getTitle();
             String expectedTitle = listItems.get(i - 1).get(0);
             helper.verifyAcutalAndExpected(expectedTitle, actualTitle);
+            Hooks.extentTest.log(Status.INFO,expectedTitle+ " is same as "+ actualTitle);
             Root.driver.close();
             helper.switchToWindow(0);
          }
       } catch (Exception e) {
          System.out.println(e.getMessage());
       }}
-
-      /**
-    * Description: hovering the light&lighting
-    */
-   public void LightsLighting() {
-    helper.mouseHover(HomePageLocators.homePageLightligthing);
-    LogHelper.info("hover over the category" + helper.retrieveText(HomePageLocators.homePageLightligthing));
-    Hooks.extentTest.log(Status.INFO,
-          "hover over the category" + helper.retrieveText(HomePageLocators.homePageLightligthing));
-
- }
-
- /**
-  * Description: clicking the ledtube
-  */
-
- public void Ledtube() {
-    helper.mouseHover(HomePageLocators.homePageledtube);
-    helper.performClick(HomePageLocators.homePageledtube);
-    Hooks.extentTest.log(Status.INFO,
-          "clicked" + helper.retrieveText(HomePageLocators.homePageledtube) + "after hovering");
-    LogHelper.info("clicked" + helper.retrieveText(HomePageLocators.homePageledtube) + "after hovering");
- }
 
  /**
      * Author - Suhansh Bangre
@@ -374,7 +387,7 @@ public class HomePageActions {
     public void verifyMadeInChinaLogo(ExtentTest test){
         Assert.assertTrue(helper.isWebElementElementDisplayed(HomePageLocators.homePageLogo));
         LogHelper.info("click"+helper.retrieveDomAttribute(HomePageLocators.homePageLogoLink, "href"));
-        test.log(Status.INFO, "click"+helper.retrieveDomAttribute(HomePageLocators.homePageLogoLink, "href"));
+        Hooks.extentTest.log(Status.INFO, "click"+helper.retrieveDomAttribute(HomePageLocators.homePageLogoLink, "href"));
     }
 
     
@@ -390,7 +403,7 @@ public class HomePageActions {
             Root.driver.findElement(HomePageLocators.homePageSearchBar).clear();
             helper.enterText(HomePageLocators.homePageSearchBar, productName);
             helper.performEnter(HomePageLocators.homePageSearchBar);
-    
+             
             LogHelper.info("click on search bar");
             LogHelper.info(productName + " entered in search bar");
             LogHelper.info("searched " + productName);

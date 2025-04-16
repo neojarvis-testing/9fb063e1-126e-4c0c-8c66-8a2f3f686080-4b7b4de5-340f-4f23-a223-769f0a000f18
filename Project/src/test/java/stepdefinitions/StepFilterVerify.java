@@ -15,102 +15,59 @@ public class StepFilterVerify {
     ProductsPageActions productsPageActions = new ProductsPageActions(Root.driver);
     HelperUtility helper = new HelperUtility(Root.driver);
 
-    @Then("the {string} logo is displayed on the homepage")
-    public void the_logo_is_displayed_on_the_homepage(String string) {
+    @Then("the {string} logo displayed on {string}")
+    public void the_logo_displayed_on(String string, String string2) {
         homePageActions.verifyMadeInChinaLogo();
-
     }
 
-    @When("I identify the search bar element")
-    public void i_identify_the_search_bar_element() {
-        homePageActions.identifySearchBarAndClick();
-    }
-
-    @When("I enter {string} into the search bar")
-    public void i_enter_into_the_search_bar(String string) {
+    @When("the user enter {string} into the search bar")
+    public void the_user_enter_into_the_search_bar(String string) {
         homePageActions.enterTextIntoSearchBar(string);
     }
 
-    @When("I click the search button or press Enter")
-    public void i_click_the_search_button_or_press_enter() {
-        homePageActions.clickSearchButton();
-    }
-
-    @Then("the search results page title should contain the keyword {string}")
-    public void the_search_results_page_title_should_contain_the_keyword(String string) {
+    @Then("the user validate search results page contains keyword {string}")
+    public void the_user_validate_search_results_page_contains_keyword(String string) {
         productsPageActions.verifyElectronicsPageTitle(string);
     }
 
-    @When("I wait for the search results to load")
-    public void i_wait_for_the_search_results_to_load() {
-        LogHelper.info(Thread.currentThread().getStackTrace()[2].getMethodName());
+    @Then("user verify {string} filter")
+    public void user_verify_filter(String string) {
+        productsPageActions.filterVerfiy(string);
     }
 
-    @When("I click on the {string} module")
-    public void i_click_on_the_module(String string) {
-        productsPageActions.clickSupplierListMenu();
-        LogHelper.info(Thread.currentThread().getStackTrace()[2].getMethodName());
-    }
-
-    @When("I identify a filter option {string}")
-    public void i_identify_a_filter_option(String string) {
-        productsPageActions.identifyCategoryFilter();
-    }
-
-    @When("I select the filter value {string}")
-    public void i_select_the_filter_value(String string) {
-        productsPageActions.selectConsumerElectronics();
-    }
-
-    @Then("only products from the {string} category should be displayed")
-    public void only_products_from_the_category_should_be_displayed(String string) {
-        productsPageActions.verifyFilterSelected(ProductsPageLocators.consumerElectronicsCatagory, string);
-    }
-
-    @When("I identify the {string} section")
-    public void i_identify_the_section(String string) {
-        productsPageActions.identifyISO9000Filter();
-    }
-
-    @When("I select {string}")
-    public void i_select(String string) {
-        productsPageActions.selectISO9000();
-    }
-
-    @Then("the {string} filter should be displayed under the {string} section")
-    public void the_filter_should_be_displayed_under_the_section(String string, String string2) {
-        productsPageActions.verifyFilterSelected(ProductsPageLocators.selectedIso9000, string);
-
-    }
-
-    @When("I select the {string} checkbox")
-    public void i_select_the_checkbox(String string) {
-        productsPageActions.selectDiamondMemberCheckBox();
+    @When("the user select {string}")
+    public void the_user_select(String string) {
+        productsPageActions.selectFilterOption(string);
     }
 
     @Then("the results should display only {string} listings")
     public void the_results_should_display_only_listings(String string) {
-        productsPageActions.verifyFilterSelected(ProductsPageLocators.selectedIso9000, string);
     }
 
-    @When("I click on the first displayed company result")
-    public void i_click_on_the_first_displayed_company_result() {
-        productsPageActions.clickFirstProduct();
-    }
-
-    @Then("I should be redirected to the company's page")
-    public void i_should_be_redirected_to_the_company_s_page() {
+    @Then("the user validate redirection to {string}")
+    public void the_user_validate_redirection_to(String string) {
         productsPageActions.switchToCompanyPage();
     }
 
-    @Then("the page should contain the keyword {string}")
-    public void the_page_should_contain_the_keyword(String string) {
+    @Then("the user validate the keyword {string}")
+    public void the_user_validate_the_keyword(String string) {
         helper.verifyAcutalAndExpected(helper.retrieveText(ProductsPageLocators.diamondTextLocator), string);
     }
 
-    @Then("I capture a screenshot of the page")
-    public void i_capture_a_screenshot_of_the_page() {
+    @Then("the user capture a screenshot of the page")
+    public void the_user_capture_a_screenshot_of_the_page() {
         ScreenCapture.takePageScreenShot("diamond_member_product");
+    }
+
+    @When("the user click on {string}")
+    public void the_user_click_on(String string) {
+        homePageActions.userClickOn(string);
+        LogHelper.info(Thread.currentThread().getStackTrace()[2].getMethodName() + " " + string);
+    }
+
+    @When("the user identify the {string}")
+    public void the_user_identify_the(String string) {
+        homePageActions.identifyElement(string);
     }
 
 }

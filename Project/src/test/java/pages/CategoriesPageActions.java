@@ -7,6 +7,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
+
+import stepdefinitions.Hooks;
 import utils.HelperUtility;
 import utils.Root;
 
@@ -25,15 +28,23 @@ public class CategoriesPageActions {
      * Author: Sushil Lodhi
      * @param test
      */
-    public void iterateItemsClickAndVerify(ExtentTest test, List<List<String>> listOfString) {
-        for (int i = 1; i <= 9; i++) {
-            WebElement element = Root.driver.findElement(By.xpath("(//a[@class='item-anchor'])[" + i + "]"));
-            element.click();
-            helper.switchToWindow(2);
-            helper.verifyAcutalAndExpected(listOfString.get(i - 1).get(1), Root.driver.getCurrentUrl());
-            Root.driver.close();
-            helper.switchToWindow(1);
+    public void iterateItemsClickAndVerify(List<List<String>> listOfString,String elementName) {
+        switch (elementName) {
+            case "Product Directory":
+                for (int i = 1; i <= 9; i++) {
+                    WebElement element = Root.driver.findElement(By.xpath("(//a[@class='item-anchor'])[" + i + "]"));
+                    element.click();
+                    helper.switchToWindow(2);
+                    helper.verifyAcutalAndExpected(listOfString.get(i - 1).get(1), Root.driver.getCurrentUrl());
+                    Hooks.extentTest.log(Status.PASS, Root.driver.getCurrentUrl()+" verified");
+                    Root.driver.close();
+                    helper.switchToWindow(1);
+                }
+                break;
+            default:
+                break;
         }
+        
     }
 
 }

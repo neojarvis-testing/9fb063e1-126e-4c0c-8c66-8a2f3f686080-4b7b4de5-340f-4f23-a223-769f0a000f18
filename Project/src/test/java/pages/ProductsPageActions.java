@@ -7,7 +7,9 @@ import org.openqa.selenium.WebElement;
 import com.aventstack.extentreports.Status;
 
 import stepdefinitions.Hooks;
+import uistore.HomePageLocators;
 import uistore.ProductsPageLocators;
+import uistore.SendInqueryPageLocators;
 import utils.HelperUtility;
 import utils.LogHelper;
 import utils.ReportGenerator;
@@ -24,7 +26,7 @@ public class ProductsPageActions {
     public ProductsPageActions(WebDriver driver) {
         this.driver = driver;
         this.helper = new HelperUtility(driver);
-        waitFor=new WaitFor(driver);
+        waitFor = new WaitFor(driver);
     }
 
     /**
@@ -36,14 +38,7 @@ public class ProductsPageActions {
     public void verifyElectronicsPageTitle(String titleText) {
         String electronicsText = helper.retrieveText(ProductsPageLocators.electronicsProductPageText);
         Assert.assertTrue(electronicsText.contains(titleText));
-    }
-
-    /**
-     * Description: click on supplier's list menu
-     * Author: Sushil Lodhi
-     */
-    public void clickSupplierListMenu() {
-        driver.findElement(ProductsPageLocators.productPageSupplierListMenu).click();
+        Hooks.extentTest.log(Status.INFO, Thread.currentThread().getStackTrace()[1].getMethodName());
     }
 
     /**
@@ -51,45 +46,31 @@ public class ProductsPageActions {
      * Author: Sushil Lodhi
      */
     public void identifyCategoryFilter() {
-       LogHelper.info(Thread.currentThread().getStackTrace()[2].getMethodName());
+        LogHelper.info(Thread.currentThread().getStackTrace()[2].getMethodName());
     }
 
-    /**
-     * Description: select consumer electronics
-     * Author: Sushil Lodhi
-     */
-    public void selectConsumerElectronics() {
-        helper.performClick(ProductsPageLocators.consumerElectronicsCatagory);
-        driver.navigate().refresh();
-    }
-
-    public void identifyISO9000Filter() {
-
-    }
-
-    /**
-     * Description: select ISO9000 in filter
-     * Author: Sushil Lodhi
-     */
-    public void selectISO9000() {
-        helper.performClick(ProductsPageLocators.iso9000);
-        driver.navigate().refresh();
-    }
-
-    /**
-     * Description: select diamond member checkbox
-     * Author: Sushil Lodhi
-     */
-    public void selectDiamondMemberCheckBox() {
-        helper.performClick(ProductsPageLocators.diamondMember);
-    }
-
-    /**
-     * Description: clicks on first product
-     * Author: Sushil Lodhi
-     */
-    public void clickFirstProduct() {
-        helper.performClick(ProductsPageLocators.firstProduct);
+    public void selectFilterOption(String filterText) {
+        switch (filterText) {
+            case "ISO 9000":
+                helper.performClick(ProductsPageLocators.iso9000);
+                Hooks.extentTest.log(Status.INFO,
+                        Thread.currentThread().getStackTrace()[1].getMethodName() + " " + filterText);
+                driver.navigate().refresh();
+                break;
+            case "Consumer Electronics":
+                helper.performClick(ProductsPageLocators.consumerElectronicsCatagory);
+                Hooks.extentTest.log(Status.INFO,
+                        Thread.currentThread().getStackTrace()[1].getMethodName() + " " + filterText);
+                driver.navigate().refresh();
+                break;
+            case "Diamond Member checkobx":
+                helper.performClick(ProductsPageLocators.diamondMember);
+                Hooks.extentTest.log(Status.INFO,
+                        Thread.currentThread().getStackTrace()[1].getMethodName() + " " + filterText);
+                break;
+            default:
+                break;
+        }
     }
 
     /**
@@ -99,7 +80,6 @@ public class ProductsPageActions {
     public void switchToCompanyPage() {
         helper.switchToNewWindow();
     }
-
     /**
      * Description: checks filter is selected or not
      * Author: Sushil Lodhi
@@ -107,6 +87,23 @@ public class ProductsPageActions {
     public void verifyFilterSelected(By expectedLocator, String verifierText) {
         String expectedText = helper.retrieveText(expectedLocator);
         helper.verifyAcutalAndExpected(verifierText, expectedText);
+        Hooks.extentTest.log(Status.INFO, Thread.currentThread().getStackTrace()[1].getMethodName());
+    }
+
+    public void filterVerfiy(String filterText){
+        switch (filterText) {
+            case "Consumer Electronics":
+                verifyFilterSelected(ProductsPageLocators.consumerElectronicsCatagory, filterText);
+                break;
+            case "ISO 9000":
+                verifyFilterSelected(ProductsPageLocators.selectedIso9000, filterText);
+                break;
+            case "Diamond Member":
+                verifyFilterSelected(ProductsPageLocators.selectedIso9000, filterText);
+                break;
+            default:
+                break;
+        }
     }
 
     /**
@@ -119,9 +116,10 @@ public class ProductsPageActions {
             LogHelper.info("Clicked on The First Product After Search");
             helper.switchToNewWindow();
             LogHelper.info("Window Handled From Parent To Child");
+            Hooks.extentTest.log(Status.INFO, Thread.currentThread().getStackTrace()[1].getMethodName());
         } catch (Exception e) {
-            e.printStackTrace();
             LogHelper.error("Error Caught");
+            Hooks.extentTest.log(Status.FAIL, Thread.currentThread().getStackTrace()[1].getMethodName());
         }
     }
 
@@ -137,10 +135,11 @@ public class ProductsPageActions {
             String pageTitle = Root.driver.getTitle();
             LogHelper.info("The PageTitle :" + pageTitle);
             Assert.assertTrue(pageTitle.contains(productName));
+            Hooks.extentTest.log(Status.PASS, Thread.currentThread().getStackTrace()[1].getMethodName());
             LogHelper.info("Assertion done");
         } catch (Exception e) {
-            e.printStackTrace();
             LogHelper.error("Error Caught");
+            Hooks.extentTest.log(Status.FAIL, Thread.currentThread().getStackTrace()[1].getMethodName());
         }
     }
 
@@ -159,6 +158,7 @@ public class ProductsPageActions {
             helper.performClick(ProductsPageLocators.productpageContactSupplierButton);
             LogHelper.info("Clicked on ContactSupplier Button");
             helper.switchToNewWindow();
+            Hooks.extentTest.log(Status.PASS, Thread.currentThread().getStackTrace()[1].getMethodName());
             LogHelper.info("Window Switched from First Child To the Second Child");
         } catch (Exception e) {
             e.printStackTrace();
@@ -175,11 +175,14 @@ public class ProductsPageActions {
             WebElement form = Root.driver.findElement(ProductsPageLocators.productpageVerifyFormIsdisplayed);
             LogHelper.info("Verified the Presence of Form : Send Inquiry Form");
             Assert.assertTrue(Root.prop.getProperty("errorMessage"), form.isDisplayed());
+            Hooks.extentTest.log(Status.PASS,
+                    Root.prop.getProperty("errorMessage") + " is equal " + form.isDisplayed());
         } catch (Exception e) {
-            e.printStackTrace();
+            Hooks.extentTest.log(Status.FAIL, e.getMessage());
         } catch (AssertionError e) {
             e.printStackTrace();
             LogHelper.error("Error Caught");
+            Hooks.extentTest.log(Status.FAIL, e.getMessage());
         }
     }
 
@@ -193,9 +196,10 @@ public class ProductsPageActions {
             LogHelper.info("Clicked on ProductArea Content");
             helper.enterText(ProductsPageLocators.productpageTextArea, inValidData);
             LogHelper.info("Sent the Text To Content Area");
+            Hooks.extentTest.log(Status.INFO, Thread.currentThread().getStackTrace()[1].getMethodName());
         } catch (Exception e) {
-            e.printStackTrace();
             LogHelper.error("Error Caught");
+            Hooks.extentTest.log(Status.FAIL, Thread.currentThread().getStackTrace()[1].getMethodName());
         }
     }
 
@@ -208,9 +212,10 @@ public class ProductsPageActions {
             helper.performClick(ProductsPageLocators.productpageEmailBox);
             helper.enterText(ProductsPageLocators.productpageEmailBox, emailSent);
             LogHelper.info("Sent The Text For Email");
+            Hooks.extentTest.log(Status.INFO, Thread.currentThread().getStackTrace()[1].getMethodName());
         } catch (Exception e) {
-            e.printStackTrace();
             LogHelper.error("Error Caught");
+            Hooks.extentTest.log(Status.FAIL, e.getMessage());
         }
     }
 
@@ -222,20 +227,23 @@ public class ProductsPageActions {
         try {
             helper.performClick(ProductsPageLocators.productpageSendInquiry);
             LogHelper.info("Clicked on Send Inquiry");
+            Hooks.extentTest.log(Status.INFO, Thread.currentThread().getStackTrace()[1].getMethodName());
         } catch (Exception e) {
-            e.printStackTrace();
             LogHelper.error("Error Caught");
+            Hooks.extentTest.log(Status.FAIL, e.getMessage());
         }
     }
 
     /**
      * Description: Enter company name in inquiry form
      * Author: Bharani
+     * 
      * @param company
      */
     public void sendCompanyField(String company) {
         helper.performClick(ProductsPageLocators.productpageSendCompanyName);
         helper.enterText(ProductsPageLocators.productpageSendCompanyName, company);
+        Hooks.extentTest.log(Status.INFO, Thread.currentThread().getStackTrace()[1].getMethodName());
     }
 
     /**
@@ -246,6 +254,7 @@ public class ProductsPageActions {
         helper.performClick(ProductsPageLocators.productpageSendMobile);
         helper.enterText(ProductsPageLocators.productpageSendMobile, mobile);
         LogHelper.info("Filled the Form");
+        Hooks.extentTest.log(Status.INFO, Thread.currentThread().getStackTrace()[1].getMethodName());
     }
 
     /**
@@ -256,10 +265,10 @@ public class ProductsPageActions {
         try {
             helper.performClick(ProductsPageLocators.productpageSendName);
             helper.enterText(ProductsPageLocators.productpageSendName, name);
-
+            Hooks.extentTest.log(Status.INFO, Thread.currentThread().getStackTrace()[1].getMethodName());
         } catch (Exception e) {
-            e.printStackTrace();
             LogHelper.error("Error Caught");
+            Hooks.extentTest.log(Status.FAIL, e.getMessage());
         }
     }
 
@@ -275,10 +284,11 @@ public class ProductsPageActions {
             LogHelper.info("Entered SendInquiry Button");
             Hooks.extentTest.log(Status.INFO, "Entered SendInquiry Button");
             ScreenCapture.takePageScreenShot("Verification_Page");
+            Hooks.extentTest.log(Status.INFO, Thread.currentThread().getStackTrace()[1].getMethodName());
             ReportGenerator.addScreenshotToReport("Verification_Page", Hooks.extentTest, "Final Page Of the Action");
         } catch (Exception e) {
-            e.printStackTrace();
             LogHelper.error("Error Caught");
+            Hooks.extentTest.log(Status.FAIL, e.getMessage());
         }
     }
 
@@ -298,7 +308,7 @@ public class ProductsPageActions {
         }
     }
 
-     /**
+    /**
      * Description: verify the ledlight text
      */
     public void verifyLEDPage(String ledTitle) {
@@ -326,26 +336,65 @@ public class ProductsPageActions {
         ScreenCapture.takePageScreenShot(driver.getTitle());
     }
 
-    /**
-     * Description: click on the contact now
-     * Author: Radhika
-     */
-
-    public void contactnow() {
-        helper.performClick(ProductsPageLocators.ProductsPageLcontact);
-        LogHelper.info("clicked over" + helper.retrieveText(ProductsPageLocators.ProductsPageLcontact));
-        Hooks.extentTest.log(Status.INFO,
-                "clicked over" + helper.retrieveText(ProductsPageLocators.ProductsPageLcontact));
+    public void clickLEDElement(String clickLEDElement){
+        switch (clickLEDElement) {
+            case "LED Strip Light filter":
+                helper.performClick(ProductsPageLocators.ProductsPageLEDStripLight);
+                LogHelper.info("clicked over" + helper.retrieveText(ProductsPageLocators.ProductsPageLEDStripLight));
+                Hooks.extentTest.log(Status.INFO,"clicked over" + helper.retrieveText(ProductsPageLocators.ProductsPageLEDStripLight));
+                ScreenCapture.takePageScreenShot(driver.getTitle());
+                break;
+            case "Contact Now button":
+                helper.performClick(ProductsPageLocators.ProductsPageLcontact);
+                LogHelper.info("clicked over" + helper.retrieveText(ProductsPageLocators.ProductsPageLcontact));
+                Hooks.extentTest.log(Status.INFO,"clicked over" + helper.retrieveText(ProductsPageLocators.ProductsPageLcontact));
+                break;
+            case "Send Inquiry Now button":
+                helper.performClick(SendInqueryPageLocators.SendInqueryPageSend);
+                LogHelper.info("clicked over the button" + helper.retrieveText(SendInqueryPageLocators.SendInqueryPageSend));
+                Hooks.extentTest.log(Status.INFO,"clicked over the button" + helper.retrieveText(SendInqueryPageLocators.SendInqueryPageSend));
+                driver.navigate().refresh();
+                helper.performClick(SendInqueryPageLocators.SendInqueryPagelogo);
+                Hooks.extentTest.log(Status.INFO,clickLEDElement+" clicked");
+                break;
+            case "LED Light Tube filter":
+                ScreenCapture.takePageScreenShot(driver.getTitle());
+                LogHelper.info("clicked over filter" + helper.retrieveText(ProductsPageLocators.ProductsPageColourtemp));
+                Hooks.extentTest.log(Status.INFO,"clicked over filter" + helper.retrieveText(ProductsPageLocators.ProductsPageColourtemp));
+                break;
+            case "homepage logo":
+                helper.performClick(SendInqueryPageLocators.SendInqueryPagelogo);
+                break;
+            case "Product Directory":
+                helper.performClick(HomePageLocators.homePageBuyerproductDirectory);
+                helper.switchToWindow(1);
+                break;
+            default:
+                break;
+        }
     }
 
-    /**
-     * Description: click on the ledlight tube filter
-     * Author: Radhika 
-     */
-
-    public void ledlighttubefilter() {
-        ScreenCapture.takePageScreenShot(driver.getTitle());
-        LogHelper.info("clicked over filter" + helper.retrieveText(ProductsPageLocators.ProductsPageColourtemp));
+    public void hoverOverSections(String string){
+        switch (string) {
+            case "Lights & Lighting":
+                helper.mouseHover(HomePageLocators.homePageLightligthing);
+                LogHelper.info("hover over the category" + helper.retrieveText(HomePageLocators.homePageLightligthing));
+                Hooks.extentTest.log(Status.INFO,
+                    "hover over the category" + helper.retrieveText(HomePageLocators.homePageLightligthing));        
+                break;
+            case "LED Tube":
+                helper.mouseHover(HomePageLocators.homePageledtube);
+                helper.performClick(HomePageLocators.homePageledtube);
+                Hooks.extentTest.log(Status.INFO,
+                    "clicked" + helper.retrieveText(HomePageLocators.homePageledtube) + "after hovering");
+                LogHelper.info("clicked" + helper.retrieveText(HomePageLocators.homePageledtube) + "after hovering");
+                break;
+            case "Buyer":
+                helper.mouseHover(HomePageLocators.homePageBuyerDropdownMenu);
+                break;
+            default:
+                break;
+        }
     }
  
 

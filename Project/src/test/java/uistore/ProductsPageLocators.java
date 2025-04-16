@@ -15,7 +15,8 @@ public class ProductsPageLocators {
     public static By selectedIso9000 = By.xpath("(//span[@class='refine-selected'])[2]");
     public static By diamondMember = By.cssSelector(
             "a[href='//www.made-in-china.com/company-search/Electronics/C1--CD_Consumer-Electronics-Catalog--MC_9--CL_DM/1.html']");
-    public static By firstProduct = By.xpath("(//h2[@class='company-name'])[1]");
+     public static By checkedDiamondMember=By.xpath("(//input[@type='checkbox'])[4]");
+            public static By firstProduct = By.xpath("(//h2[@class='company-name'])[1]");
     public static By diamondTextLocator = By.cssSelector("span[class='shop-sign__text']");
     public static By productpageClickFirstCompanyAfterSearch = By.xpath("(//h2[@class='product-name'])[1]");
     public static By productpageContactSupplierButton = By.xpath("(//a[@class='btns button-link-contact'])[1]");

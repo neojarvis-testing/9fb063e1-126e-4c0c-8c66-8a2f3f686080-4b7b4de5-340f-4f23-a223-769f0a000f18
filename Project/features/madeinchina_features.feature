@@ -20,30 +20,29 @@ Feature: Made In China Feature Testing
   @TestCase01
   Scenario: Search and filter products based on categories and certifications
 
-    Then the "Made in China" logo is displayed on the homepage
-    When I identify the search bar element
-    And I enter "Electronics" into the search bar
-    And I click the search button or press Enter
-    Then the search results page title should contain the keyword "Electronics"
+    Then the "Made in China" logo displayed on "Homepage"
+    When the user identify the "search bar element"
+    And the user enter "Electronics" into the search bar
+    And the user click on "search button"
+    Then the user validate search results page contains keyword "Electronics"
 
-    When I wait for the search results to load
-    And I click on the "Supplier List" module
-    And I identify a filter option "Category"
-    And I select the filter value "Consumer Electronics"
-    And only products from the "Consumer Electronics" category should be displayed
+    When the user click on "Supplier List module" 
+    And the user identify the "filter option Category"
+    And the user select "Consumer Electronics"
+    Then user verify "Consumer Electronics" filter
 
-    When I identify the "Management Certification" section
-    And I select "ISO 9000"
-    And the "ISO 9000" filter should be displayed under the "Management Certification" section
+    When the user identify the "Management Certification section"
+    And the user select "ISO 9000"
+    Then user verify "ISO 9000" filter
 
-    When I identify the "Member & Type" section
-    And I select the "Diamond Member" checkbox
-    And the results should display only "Diamond Member" listings
+    When the user identify the "Member & Type section"
+    And the user select "Diamond Member checkobx"
+    Then user verify "Diamond Member" filter
 
-    When I click on the first displayed company result
-    Then I should be redirected to the company's page
-    And the page should contain the keyword "Diamond Member"
-    And I capture a screenshot of the page
+    When the user click on "First displayed company result"
+    Then the user validate redirection to "company's page"
+    Then the user validate the keyword "Diamond Member"
+    And the user capture a screenshot of the page
   
    @TestCase03
   Scenario: User submits an inquiry for a product
@@ -114,19 +113,21 @@ Then user is taken to "Made-in-China.com - Manufacturers, Suppliers & Products i
     When the user searches for "LED lights" in the search bar
     Then the search results for "LED light" should be displayed
 
-    When the user clicks the "LED Strip Light" filter
+    When the user clicks the "LED Strip Light filter"
+    And the user clicks the "Contact Now button"
+    And  the user fills inquiry form with "<Content>" and "<Email>"
 
-    When the user clicks the "Contact Now" or "Inquire Now" button
-    And fills the inquiry form with "I would like to inquire about your services" in Content and "fgfge@gmail.com" in Email Address
-
-    And clicks the "Send Inquiry Now" button
-    When the user navigates back to the homepage using the site logo
-    When the user hovers over "Lights & Lighting" under the Categories section
-    And hovers over "LED Tube" under the "LED Interior Lighting" section
+    And the user clicks the "Send Inquiry Now button"
+    Then the user clicks the "homepage logo"
+    And the user navigates back to "https://www.made-in-china.com/"
+    When the user hovers over "Lights & Lighting" under "Categories " section
+    And the user hovers over "LED Tube" under "LED Interior Lighting " section
     
-    And the keyword "LED Tube" should be present on the product list page
+    Then the user validate "LED Tube" present on "product list" page
+    Examples:
+        |Content|Email|
+        |the user would like to inquire about your services|fgfge@gmail.com|
 
-    When the user clicks the "LED Light Tube" filter
 
     @TestCase07
     Scenario: Navigate through Sections and Return Back
@@ -187,11 +188,10 @@ Then user is taken to "Made-in-China.com - Manufacturers, Suppliers & Products i
 
   @TestCase10
   Scenario: Verify navigation and redirection for Product Directory links using a Data Table
-    Given the user hovers over the buyer module
-    And the user clicks on "Product Directory" under the search section
+    When the user hovers over "Buyer" menu
+    And the user click on "Product Directory" button
     Then the browser navigates to the "Products Directory" page in a new tab
-
-    When the user iterates through the Product Directory links
+    Then the user iterates and verifies through "Product Directory" links
     | ItemName                          | ExpectedURL                                                                                       | Action                 | Filename                  |
     | Machine Tools                     | /Manufacturing-Processing-Machinery-Catalog/Machine-Tools.html                                   |                        |                           |
     | Engineering & Construction Machinery | /Manufacturing-Processing-Machinery-Catalog/Engineering-Construction-Machinery.html           |                        |                           |
@@ -202,11 +202,7 @@ Then user is taken to "Made-in-China.com - Manufacturers, Suppliers & Products i
     | Laser Equipment                   | /Manufacturing-Processing-Machinery-Catalog/Laser-Equipment.html                                |                        |                           |
     | Casting & Forging                 | /Manufacturing-Processing-Machinery-Catalog/Casting-Forging.html                                | log:click on casting  |                           |
     | Agricultural Machinery            | /Manufacturing-Processing-Machinery-Catalog/Agricultural-Machinery.html                         | screenshot            | agricultural_machinery   |
-
-    Then the browser redirects to the correct page for each link
-    And the URL contains the expected value
-
-    And logs and screenshots are handled for specific actions
+    Then logs and screenshots are handled for specific actions
 
 
    

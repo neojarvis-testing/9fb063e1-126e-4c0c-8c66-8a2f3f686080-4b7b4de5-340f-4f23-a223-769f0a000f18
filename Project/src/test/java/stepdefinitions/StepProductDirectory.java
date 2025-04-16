@@ -21,15 +21,16 @@ public class StepProductDirectory {
     CategoriesPageActions categoriesPageActions = new CategoriesPageActions(Root.driver);
     HelperUtility helper = new HelperUtility(Root.driver);
 
-    @Given("the user hovers over the buyer module")
-    public void the_user_hovers_over_the_buyer_module() {
-        homePageActions.homePageHoverOverBuyer();
+    @When("the user hovers over {string} menu")
+        public void the_user_hovers_over_menu(String string) {
+        productsPageActions.hoverOverSections(string);
     }
 
-    @Given("the user clicks on {string} under the search section")
-    public void the_user_clicks_on_under_the_search_section(String string) {
-        homePageActions.clickOnProductDirectory();
+    @Given("the user click on {string} button")
+        public void the_user_click_on_button(String string) {
+            homePageActions.userClickOn(string);
     }
+
 
     @Then("the browser navigates to the {string} page in a new tab")
     public void the_browser_navigates_to_the_page_in_a_new_tab(String string) {
@@ -37,19 +38,11 @@ public class StepProductDirectory {
         LogHelper.info("navigate back to product directory");
     }
 
-    @When("the user iterates through the Product Directory links")
-    public void the_user_iterates_through_the_product_directory_links(io.cucumber.datatable.DataTable dataTable) {
+    @Then("the user iterates and verifies through {string} links")
+    public void the_user_iterates_and_verifies_through_links(String string, io.cucumber.datatable.DataTable dataTable) {
         List<List<String>> stringElements = dataTable.asLists();
-        categoriesPageActions.iterateItemsClickAndVerify(Hooks.extentTest, stringElements);
-    }
-
-    @Then("the browser redirects to the correct page for each link")
-    public void the_browser_redirects_to_the_correct_page_for_each_link() {
+        categoriesPageActions.iterateItemsClickAndVerify(stringElements,string);
         LogHelper.info(Thread.currentThread().getStackTrace()[2].getMethodName());
-    }
-
-    @Then("the URL contains the expected value")
-    public void the_url_contains_the_expected_value() {
         Hooks.extentTest.log(Status.PASS, "click on casting");
     }
 
